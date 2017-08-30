@@ -13,10 +13,16 @@ public class Usuario {
 	private Integer idUsuario;
 	private String nome;
 	private float saldo;
-	@OneToMany
 	
-	@JoinColumn(referencedColumnName = "idFixo", name="fixoFk" )	
-	private List<Fixos> fixo;
+	@OneToMany(mappedBy ="usuario")
+	private List<Divida> divida;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Lancamento> lancamento;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Fixos> fixos;
+
 	
 	public String getNome() {
 		return nome;

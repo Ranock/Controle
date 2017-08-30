@@ -4,34 +4,73 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
 
 public class GenericDao<E> {
 
 	protected Class<E> persistentClass;
 	private EntityManager manager;
 
-	@SuppressWarnings("unchecked")
+	
 	public GenericDao() {
 		super();
 		Type tipo = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		this.persistentClass = (Class<E>) tipo;
 		manager = JpaUtil.getEntityManager();
 	}
-	public GenericDao(EntityManager manager){
+
+	public GenericDao(EntityManager manager) {
 		super();
 		this.manager = manager;
 	}
-	
-	@Override
-	public EntityManager getEntityManager(){
-		if((this.manager != null) && (!this.manager.isOpen()))
-		this.manager = JpaUtil.getEntityManager();
-		
+
+	public EntityManager getEntityManager() {
+		if ((this.manager != null) && (!this.manager.isOpen()))
+			this.manager = JpaUtil.getEntityManager();
+
 		return this.manager;
-		
-		
+	}
+
+	public void abrirTransacao() {
+		this.getEntityManager().getTransaction().begin();
+	}
+
+	public void gravarTransacao() {
+		this.getEntityManager().flush();
+		this.getEntityManager().getTransaction().commit();
+	}
+
+	public void desfazerTransacao() {
+		this.getEntityManager().getTransaction().rollback();
+	}
+
+	public E inserir(E obj) {
+		boolean transacao = this.getEntityManager().getTransaction().isActive();
+
+		if (!transacao)
+			this.abrirTransacao();
+
+		this.getEntityManager().merge(obj);
+
+		if (!transacao)
+			this.gravarTransacao();
+		return obj;
 	}
 	
-	CriteriaBuilder cd = this.manager.getCriteriaBuilder();
+	public E lerPorId(Object id){
+		return (E) this.getEntityManager().find(this.persistentClass,id);
+	}
+	
+	public void Excluir(E obj){
+		
+		boolean transacao = this.getEntityManager().getTransaction().isActive();
+		if(!transacao)
+			this.abrirTransacao();
+			
+		this.getEntityManager().remove(obj);
+		
+		if(!transacao)
+			this.gravarTransacao();
+				
+	}
+
 }

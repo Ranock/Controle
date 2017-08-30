@@ -2,6 +2,7 @@ package dominio;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Fixos {
@@ -12,6 +13,9 @@ public class Fixos {
 	private float valorFixo;
 	private Integer tipoFixo;
 	private boolean precoVaria;
+	
+	@ManyToOne
+	private Usuario usuario;
 	
 	public Integer getIdFixo() {
 		return idFixo;

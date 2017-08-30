@@ -2,9 +2,11 @@ package dominio;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
-public class LancamentosDividas {
+public class LancamentoDivida {
 	
 	@Id
 	private Integer idLancamentoDivida;
@@ -12,6 +14,11 @@ public class LancamentosDividas {
 	private float valor;
 	private String tipo;
 	
+	@ManyToOne
+	private Divida divida;
+	
+	@OneToOne
+	private Lancamento lancamento;
 	
 	public Integer getIdLancamentoDivida() {
 		return idLancamentoDivida;
@@ -53,7 +60,7 @@ public class LancamentosDividas {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LancamentosDividas other = (LancamentosDividas) obj;
+		LancamentoDivida other = (LancamentoDivida) obj;
 		if (data == null) {
 			if (other.data != null)
 				return false;
@@ -68,7 +75,7 @@ public class LancamentosDividas {
 	}
 	@Override
 	public String toString() {
-		return "LancamentosDividas [idLancamentoDivida=" + idLancamentoDivida + ", data=" + data + ", valor=" + valor
+		return "LancamentoDivida [idLancamentoDivida=" + idLancamentoDivida + ", data=" + data + ", valor=" + valor
 				+ ", tipo=" + tipo + "]";
 	}
 	

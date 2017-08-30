@@ -1,11 +1,14 @@
 package dominio;
 
-import javax.persistence.Column;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Dividas {
+public class Divida {
 	@Id
 	private Integer idDivida;
 	private String data;
@@ -13,6 +16,12 @@ public class Dividas {
 	private String nomeDivida;
 	private boolean quitacao;
 
+	@ManyToOne
+	private Usuario usuario;
+	
+	@OneToMany(mappedBy = "divida")
+	private List<LancamentoDivida> lancamentoDivida;
+	
 	public Integer getIdDivida() {
 		return idDivida;
 	}
@@ -70,7 +79,7 @@ public class Dividas {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Dividas other = (Dividas) obj;
+		Divida other = (Divida) obj;
 		if (idDivida == null) {
 			if (other.idDivida != null)
 				return false;
@@ -86,7 +95,7 @@ public class Dividas {
 
 	@Override
 	public String toString() {
-		return "Dividas [idDivida=" + idDivida + ", data=" + data + ", valorDivida=" + valorDivida + ", nomeDivida="
+		return "Divida [idDivida=" + idDivida + ", data=" + data + ", valorDivida=" + valorDivida + ", nomeDivida="
 				+ nomeDivida + ", quitacao=" + quitacao + "]";
 	}
 	
