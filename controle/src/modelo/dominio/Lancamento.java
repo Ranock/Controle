@@ -1,4 +1,4 @@
-package dominio;
+package modelo.dominio;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -45,6 +45,14 @@ public class Lancamento {
 
 	public void setValorLancamento(float valorLancamento) {
 		this.valorLancamento = valorLancamento;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

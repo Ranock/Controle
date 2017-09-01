@@ -1,4 +1,4 @@
-package dominio;
+package modelo.dominio;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -56,5 +56,46 @@ public class Fixos {
 	public void setPrecoVaria(boolean precoVaria) {
 		this.precoVaria = precoVaria;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idFixo == null) ? 0 : idFixo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fixos other = (Fixos) obj;
+		if (idFixo == null) {
+			if (other.idFixo != null)
+				return false;
+		} else if (!idFixo.equals(other.idFixo))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Fixos [idFixo=" + idFixo + ", nomeFixo=" + nomeFixo + ", valorFixo=" + valorFixo + ", tipoFixo="
+				+ tipoFixo + ", precoVaria=" + precoVaria + ", usuario=" + usuario + "]";
+	}
+	
+	
 
 }

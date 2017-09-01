@@ -1,6 +1,6 @@
-package dao;
+package modelo.dao;
 
-import dominio.Usuario;
+import modelo.dominio.Usuario;
 
 public class UsuarioDAO extends GenericDao<Usuario>{
 

@@ -1,4 +1,4 @@
-package dominio;
+package modelo.dominio;
 
 import java.util.List;
 
@@ -60,6 +60,24 @@ public class Divida {
 
 	public void setQuitacao(boolean quitacao) {
 		this.quitacao = quitacao;
+	}
+	
+	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<LancamentoDivida> getLancamentoDivida() {
+		return lancamentoDivida;
+	}
+
+	public void setLancamentoDivida(List<LancamentoDivida> lancamentoDivida) {
+		this.lancamentoDivida = lancamentoDivida;
 	}
 
 	@Override
