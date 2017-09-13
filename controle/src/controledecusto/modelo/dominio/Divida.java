@@ -1,4 +1,4 @@
-package modelo.dominio;
+package controledecusto.modelo.dominio;
 
 import java.util.List;
 

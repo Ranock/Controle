@@ -1,5 +1,4 @@
-package modelo.dominio;
-
+package controledecusto.modelo.dominio;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;

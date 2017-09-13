@@ -1,4 +1,4 @@
-package modelo.dominio;
+package controledecusto.modelo.dominio;
 
 import java.util.List;
 
@@ -13,17 +13,16 @@ public class Usuario {
 	private Integer idUsuario;
 	private String nome;
 	private float saldo;
-	
-	@OneToMany(mappedBy ="usuario")
+
+	@OneToMany(mappedBy = "usuario")
 	private List<Divida> divida;
-	
+
 	@OneToMany(mappedBy = "usuario")
 	private List<Lancamento> lancamento;
-	
+
 	@OneToMany(mappedBy = "usuario")
 	private List<Fixos> fixos;
 
-	
 	public String getNome() {
 		return nome;
 	}
@@ -103,5 +102,4 @@ public class Usuario {
 				+ ", lancamento=" + lancamento + ", fixos=" + fixos + "]";
 	}
 
-	
 }

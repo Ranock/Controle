@@ -1,5 +1,4 @@
-package modelo.dao;
-
+package controledecusto.modelo.dao;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
