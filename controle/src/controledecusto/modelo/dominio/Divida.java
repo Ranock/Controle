@@ -1,26 +1,38 @@
 package controledecusto.modelo.dominio;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Divida {
+@SequenceGenerator(name="DIVIDA_SEQUENCE", allocationSize=1, sequenceName="public.divida_sequence")
+
+public class Divida implements Serializable	 {
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="DIVIDA_SEQUENCE")
 	private Integer idDivida;
 	private String data;
-	private float valorDivida;
+	private Float valorDivida;
 	private String nomeDivida;
 	private boolean quitacao;
 
-	@ManyToOne
-	private Usuario usuario;
 	
-	@OneToMany(mappedBy = "divida")
-	private List<LancamentoDivida> lancamentoDivida;
+	@OneToMany
+	@JoinTable(
+			name="lancamento_divida",
+			joinColumns= @JoinColumn(name="id_divida"),
+			inverseJoinColumns = @JoinColumn(name="id_lancamento")			
+			)
+	private List<Lancamento> lancamento;
 	
 	public Integer getIdDivida() {
 		return idDivida;
@@ -38,7 +50,7 @@ public class Divida {
 		this.data = data;
 	}
 
-	public float getValorDivida() {
+	public Float getValorDivida() {
 		return valorDivida;
 	}
 
@@ -63,22 +75,23 @@ public class Divida {
 	}
 	
 	
-
-	public Usuario getUsuario() {
-		return usuario;
+	public List<Lancamento> getLancamentos() {
+		return lancamento;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setLancamentos(List<Lancamento> lancamento) {
+		this.lancamento= lancamento;
+	}
+	
+	public void setLancamento(Lancamento lancamento) {
+		
+		if(this.lancamento != null) {
+				if(!this.lancamento.contains(lancamento)) {
+					this.lancamento.add(lancamento);
+				}
+		}else;
 	}
 
-	public List<LancamentoDivida> getLancamentoDivida() {
-		return lancamentoDivida;
-	}
-
-	public void setLancamentoDivida(List<LancamentoDivida> lancamentoDivida) {
-		this.lancamentoDivida = lancamentoDivida;
-	}
 
 	@Override
 	public int hashCode() {

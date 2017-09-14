@@ -1,20 +1,26 @@
 package controledecusto.modelo.dominio;
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Fixos {
+@SequenceGenerator(name="FIXOS_SEQUENCE", allocationSize=1, sequenceName="public.fixos_sequence")
+
+public class Fixos implements Serializable{
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="FIXOS_SEQUENCE")
 	private Integer idFixo;
 	private String nomeFixo;
 	private float valorFixo;
 	private Integer tipoFixo;
 	private boolean precoVaria;
 	
-	@ManyToOne
-	private Usuario usuario;
+
 	
 	public Integer getIdFixo() {
 		return idFixo;
@@ -56,13 +62,6 @@ public class Fixos {
 		this.precoVaria = precoVaria;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	@Override
 	public int hashCode() {
@@ -92,7 +91,7 @@ public class Fixos {
 	@Override
 	public String toString() {
 		return "Fixos [idFixo=" + idFixo + ", nomeFixo=" + nomeFixo + ", valorFixo=" + valorFixo + ", tipoFixo="
-				+ tipoFixo + ", precoVaria=" + precoVaria + ", usuario=" + usuario + "]";
+				+ tipoFixo + ", precoVaria=" + precoVaria + "]";
 	}
 	
 	

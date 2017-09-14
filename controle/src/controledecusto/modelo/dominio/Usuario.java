@@ -1,26 +1,36 @@
 package controledecusto.modelo.dominio;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Usuario {
+@SequenceGenerator(name="USER_SEQUENCE", allocationSize=1, sequenceName="public.user_sequence")
+public class Usuario implements Serializable {
+	
 	@Id
+	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator="USER_SEQUENCE")
 	private Integer idUsuario;
 	private String nome;
 	private float saldo;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany
+	@JoinColumn(name="usuario_id")
 	private List<Divida> divida;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany
+	@JoinColumn(name="usuario_id")
 	private List<Lancamento> lancamento;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany
+	@JoinColumn(name="usuario_id")
 	private List<Fixos> fixos;
 
 	public String getNome() {
@@ -47,21 +57,40 @@ public class Usuario {
 		this.idUsuario = idUsuario;
 	}
 
-	public List<Divida> getDivida() {
+	public List<Divida> getDividas() {
 		return divida;
 	}
 
-	public void setDivida(List<Divida> divida) {
+	public void setDividas(List<Divida> divida) {
 		this.divida = divida;
 	}
+	
+	public void setDivida(Divida divida)  {
+		if(this.divida != null) {
+			if(!this.divida.contains(divida)) {
+				this.divida.add(divida);
+			}
+	}else;
+}
 
-	public List<Lancamento> getLancamento() {
+
+	public List<Lancamento> getLancamentos() {
 		return lancamento;
 	}
 
-	public void setLancamento(List<Lancamento> lancamento) {
+	public void setLancamentos(List<Lancamento> lancamento) {
 		this.lancamento = lancamento;
 	}
+	
+	public void setLancamento(Lancamento lancamento) {
+		if(this.lancamento != null) {
+			if(!this.lancamento.contains(lancamento)) {
+				this.lancamento.add(lancamento);
+			}
+	}else;
+}
+
+
 
 	public List<Fixos> getFixos() {
 		return fixos;
@@ -70,6 +99,16 @@ public class Usuario {
 	public void setFixos(List<Fixos> fixos) {
 		this.fixos = fixos;
 	}
+	
+	public void setFixo(Fixos fixos)  {
+		if(this.fixos != null) {
+			if(!this.fixos.contains(fixos)) {
+				this.fixos.add(fixos);
+			}
+	}else;
+}
+
+
 
 	@Override
 	public int hashCode() {
@@ -98,8 +137,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", nome=" + nome + ", saldo=" + saldo + ", divida=" + divida
-				+ ", lancamento=" + lancamento + ", fixos=" + fixos + "]";
+		return "Usuario [idUsuario=" + idUsuario + ", nome=" + nome + ", saldo=" + saldo + "]";
 	}
 
 }

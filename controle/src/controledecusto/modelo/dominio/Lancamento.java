@@ -1,19 +1,26 @@
 package controledecusto.modelo.dominio;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Lancamento {
+@SequenceGenerator(name="LANCAMENTO_SEQUENCE", allocationSize=1, sequenceName="public.lancamento_sequence")
+
+public class Lancamento implements Serializable{
 	@Id
+	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "LANCAMENTO_SEQUENCE")
 	private Integer idLacamento; 
 	private String dataLancamento;
 	private String nomeLancamento;
 	private float valorLancamento;
 
-	@ManyToOne
-	private Usuario usuario;
+
 	
 	public Integer getIdLacamento() {
 		return idLacamento;
@@ -47,13 +54,6 @@ public class Lancamento {
 		this.valorLancamento = valorLancamento;
 	}
 	
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	@Override
 	public int hashCode() {
