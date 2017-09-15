@@ -1,27 +1,31 @@
 package controledecusto.modelo.dominio;
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name="FIXOS_SEQUENCE", allocationSize=1, sequenceName="public.fixos_sequence")
-
-public class Fixos implements Serializable{
+public class Fixos {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="FIXOS_SEQUENCE")
+	@SequenceGenerator(name="FIXOS_SEQUENCE", allocationSize=1, sequenceName="public.fixos_sequence")
 	private Integer idFixo;
+	@Column(length=100)
 	private String nomeFixo;
+	@Column(columnDefinition="numeric", precision=2)
 	private float valorFixo;
 	private Integer tipoFixo;
 	private boolean precoVaria;
 	
+	@ManyToOne
+	@JoinColumn(name="usuario_id")
+	private Usuario usuario;
 
-	
 	public Integer getIdFixo() {
 		return idFixo;
 	}
@@ -62,6 +66,13 @@ public class Fixos implements Serializable{
 		this.precoVaria = precoVaria;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	@Override
 	public int hashCode() {
@@ -93,7 +104,6 @@ public class Fixos implements Serializable{
 		return "Fixos [idFixo=" + idFixo + ", nomeFixo=" + nomeFixo + ", valorFixo=" + valorFixo + ", tipoFixo="
 				+ tipoFixo + ", precoVaria=" + precoVaria + "]";
 	}
-	
-	
+
 
 }

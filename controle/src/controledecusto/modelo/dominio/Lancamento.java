@@ -1,33 +1,43 @@
 package controledecusto.modelo.dominio;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name="LANCAMENTO_SEQUENCE", allocationSize=1, sequenceName="public.lancamento_sequence")
-
-public class Lancamento implements Serializable{
+public class Lancamento{
 	@Id
 	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "LANCAMENTO_SEQUENCE")
-	private Integer idLacamento; 
+	@SequenceGenerator(name="LANCAMENTO_SEQUENCE", allocationSize=1, sequenceName="public.lancamento_sequence")
+	private Integer idLancamento; 
 	private String dataLancamento;
 	private String nomeLancamento;
 	private float valorLancamento;
-
-
 	
-	public Integer getIdLacamento() {
-		return idLacamento;
+	@ManyToOne
+	@JoinTable(
+			name="lancamento_divida",
+			joinColumns= @JoinColumn(name="id_lancamento", referencedColumnName="idLancamento"),
+			inverseJoinColumns = @JoinColumn(name="id_divida", referencedColumnName="idDivida")			
+			)
+	private Divida divida;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="usuario_id")
+	private Usuario usuario;
+
+	public Integer getIdLancamento() {
+		return idLancamento;
 	}
 
-	public void setIdLacamento(Integer idLacamento) {
-		this.idLacamento = idLacamento;
+	public void setIdLancamento(Integer idLancamento) {
+		this.idLancamento = idLancamento;
 	}
 
 	public String getDataLancamento() {
@@ -53,14 +63,29 @@ public class Lancamento implements Serializable{
 	public void setValorLancamento(float valorLancamento) {
 		this.valorLancamento = valorLancamento;
 	}
+
+	public Divida getDivida() {
+		return divida;
+	}
+
+	public void setDivida(Divida divida) {
+		this.divida = divida;
+	}
 	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dataLancamento == null) ? 0 : dataLancamento.hashCode());
-		result = prime * result + ((idLacamento == null) ? 0 : idLacamento.hashCode());
+		result = prime * result + ((idLancamento == null) ? 0 : idLancamento.hashCode());
 		return result;
 	}
 
@@ -73,23 +98,18 @@ public class Lancamento implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Lancamento other = (Lancamento) obj;
-		if (dataLancamento == null) {
-			if (other.dataLancamento != null)
+		if (idLancamento == null) {
+			if (other.idLancamento != null)
 				return false;
-		} else if (!dataLancamento.equals(other.dataLancamento))
-			return false;
-		if (idLacamento == null) {
-			if (other.idLacamento != null)
-				return false;
-		} else if (!idLacamento.equals(other.idLacamento))
+		} else if (!idLancamento.equals(other.idLancamento))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Lancamento [idLacamento=" + idLacamento + ", dataLancamento=" + dataLancamento + ", nomeLancamento="
+		return "Lancamento [idLancamento=" + idLancamento + ", dataLancamento=" + dataLancamento + ", nomeLancamento="
 				+ nomeLancamento + ", valorLancamento=" + valorLancamento + "]";
 	}
-
+	
 }

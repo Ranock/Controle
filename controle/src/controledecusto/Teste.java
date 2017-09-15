@@ -38,7 +38,7 @@ public class Teste {
 			
 			user.setNome("Hugo");
 			user.setSaldo(0);
-			udao.inserir(user);
+			user = udao.inserir(user);
 			
 			fix.setNomeFixo("fixo1");
 			fix.setPrecoVaria(false);
@@ -52,23 +52,31 @@ public class Teste {
 			div.setData("10-10-2000");
 			div.setNomeDivida("teste1");
 			div.setQuitacao(false);
-			div.setValorDivida(10);
+			div.setValorDivida(10f);
 			
 			lanc2.setDataLancamento("10-10-2000");
 			lanc2.setNomeLancamento("teste2");
 			lanc2.setValorLancamento(10);
 
-			div.setLancamento(lanc2);
+			div.setUsuario(user);
+			div = ddao.inserir(div);
+			lanc.setUsuario(user);
+			lanc2.setUsuario(user);
+			lanc.setDivida(div);
+			lanc2= ldao.inserir(lanc2);
+			lanc = ldao.inserir(lanc);
+			fix.setUsuario(user);
+			fix = fdao.inserir(fix);
 			
-			user.setDivida(div);
-			user.setLancamento(lanc);
-			user.setLancamento(lanc2);
-			user.setFixo(fix);
 			
 			
 			
 			
-			udao.inserir(user);
+			
+			
+			
+			
+			
 		
 	}
 

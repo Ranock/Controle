@@ -48,7 +48,7 @@ public class GenericDao<E> {
 		if (!transacao)
 			this.abrirTransacao();
 
-		this.getEntityManager().merge(obj);
+		obj = this.getEntityManager().merge(obj);
 
 		if (!transacao)
 			this.gravarTransacao();
