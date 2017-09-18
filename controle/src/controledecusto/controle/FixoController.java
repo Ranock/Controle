@@ -11,47 +11,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import controledecusto.modelo.dominio.Usuario;
-import controledecusto.servico.UsuarioService;
+import controledecusto.modelo.dominio.Fixo;
+import controledecusto.servico.FixoService;
 
 @RestController
-@RequestMapping(value="/usuario")
-public class UsuarioController {
+@RequestMapping(value="/fixo")
+public class FixoController {
 	
-
-
-
 	@RequestMapping(value="/", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity<Fixo> cadastrarFixo(@RequestBody Fixo fixo) {
 	
-		UsuarioService usu = new UsuarioService();
-		usuario = usu.cadastrarUsuario(usuario);
+		FixoService fix = new FixoService();
 		
-		return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+		fixo = fix.cadastrarFixo(fixo);
+			
+		return new ResponseEntity<>(fixo, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> buscarUsuario(@PathVariable Integer id) {
-		UsuarioService usu = new UsuarioService();
-		Usuario usuario = usu.buscarUsuario(id);
-		return new ResponseEntity<>(usuario, HttpStatus.OK);
+	public ResponseEntity<Fixo> buscarFixo(@PathVariable Integer id) {
+		FixoService fix = new FixoService();
+		Fixo fixo = fix.buscarFixo(id);
+		return new ResponseEntity<>(fixo, HttpStatus.OK);
 	}
 	
 	
 	@RequestMapping(value="{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Usuario> deletarUsuario(@PathVariable Integer id) {
-		UsuarioService usu = new UsuarioService();
-		usu.apagarUsuario(id);
+	public ResponseEntity<Fixo> deletarFixo(@PathVariable Integer id) {
+		FixoService fix = new FixoService();
+		fix.apagarFixo(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
 	@RequestMapping(value="/all", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<List<Usuario>> buscarUsuarios(){
-		UsuarioService usu = new UsuarioService();
-		List<Usuario> usuarioL;
+	public ResponseEntity<List<Fixo>> buscarFixos(){
+		FixoService fix = new FixoService();
+		List<Fixo> fixoL;
 		
-		usuarioL = usu.buscarTodos();
+		fixoL = fix.buscarTodos();
 		
-		return new ResponseEntity<>(usuarioL, HttpStatus.OK);
+		return new ResponseEntity<>(fixoL, HttpStatus.OK);
 	}
 }

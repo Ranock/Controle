@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Fixos {
+public class Fixo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="FIXOS_SEQUENCE")
@@ -90,7 +90,7 @@ public class Fixos {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Fixos other = (Fixos) obj;
+		Fixo other = (Fixo) obj;
 		if (idFixo == null) {
 			if (other.idFixo != null)
 				return false;
