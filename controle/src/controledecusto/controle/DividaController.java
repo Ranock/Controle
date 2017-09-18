@@ -40,8 +40,7 @@ public class DividaController {
 	public ResponseEntity<Divida> deletarDivida(@PathVariable Integer id) {
 		DividaService div = new DividaService();
 		div.apagarDivida(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-		
+		return new ResponseEntity<>(HttpStatus.OK);		
 	}
 	@RequestMapping(value="/all", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<List<Divida>> buscarDividas(){
