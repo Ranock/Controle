@@ -2,7 +2,9 @@ package controledecusto.servico;
 
 import java.util.List;
 
+import controledecusto.modelo.dao.DividaDAO;
 import controledecusto.modelo.dao.LancamentoDAO;
+import controledecusto.modelo.dominio.Divida;
 import controledecusto.modelo.dominio.Lancamento;
 
 public class LancamentoService {
@@ -30,6 +32,14 @@ public class LancamentoService {
 	public List<Lancamento> buscarTodos() {
 
 		return null;
+	}
+
+	public List<Lancamento> buscarLancamentosUsuario(Integer id) {
+		LancamentoDAO ldao = new LancamentoDAO();
+		List<Lancamento> lancL;
+		lancL = ldao.buscarLancamentosUsuario(id);
+		
+		return lancL;
 	}
 
 }

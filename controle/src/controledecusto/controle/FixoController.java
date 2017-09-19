@@ -43,13 +43,5 @@ public class FixoController {
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
-	@RequestMapping(value="/all", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<List<Fixo>> buscarFixos(){
-		FixoService fix = new FixoService();
-		List<Fixo> fixoL;
-		
-		fixoL = fix.buscarTodos();
-		
-		return new ResponseEntity<>(fixoL, HttpStatus.OK);
-	}
+	
 }

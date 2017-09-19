@@ -3,7 +3,9 @@ package controledecusto.servico;
 import java.util.List;
 
 import controledecusto.modelo.dao.DividaDAO;
+import controledecusto.modelo.dao.UsuarioDAO;
 import controledecusto.modelo.dominio.Divida;
+import controledecusto.modelo.dominio.Usuario;
 
 public class DividaService {
 
@@ -28,9 +30,13 @@ public class DividaService {
 		ddao.Excluir(divida);
 	}
 
-	public List<Divida> buscarTodos() {
-
-		return null;
+	public List<Divida> buscarDividaUsuario(Integer id) {
+		DividaDAO ddao = new DividaDAO();
+		List<Divida> div;
+		div = ddao.buscarDividasUsuario(id);
+		
+		
+		return div;
 	}
 
 }

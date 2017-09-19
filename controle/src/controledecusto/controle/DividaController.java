@@ -36,19 +36,10 @@ public class DividaController {
 	}
 	
 	
-	@RequestMapping(value="{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Divida> deletarDivida(@PathVariable Integer id) {
 		DividaService div = new DividaService();
 		div.apagarDivida(id);
 		return new ResponseEntity<>(HttpStatus.OK);		
-	}
-	@RequestMapping(value="/all", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<List<Divida>> buscarDividas(){
-		DividaService div = new DividaService();
-		List<Divida> dividaL;
-		
-		dividaL = div.buscarTodos();
-		
-		return new ResponseEntity<>(dividaL, HttpStatus.OK);
 	}
 }
