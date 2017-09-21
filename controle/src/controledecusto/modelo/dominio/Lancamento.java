@@ -1,5 +1,7 @@
 package controledecusto.modelo.dominio;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Lancamento{
@@ -15,7 +21,9 @@ public class Lancamento{
 	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "LANCAMENTO_SEQUENCE")
 	@SequenceGenerator(name="LANCAMENTO_SEQUENCE", allocationSize=1, sequenceName="public.lancamento_sequence")
 	private Integer idLancamento; 
-	private String dataLancamento;
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern= "dd/MM/yyy")
+	private Date  dataLancamento;
 	private String nomeLancamento;
 	private float valorLancamento;
 	
@@ -40,11 +48,11 @@ public class Lancamento{
 		this.idLancamento = idLancamento;
 	}
 
-	public String getDataLancamento() {
+	public Date getDataLancamento() {
 		return dataLancamento;
 	}
 
-	public void setDataLancamento(String dataLancamento) {
+	public void setDataLancamento(Date dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
 

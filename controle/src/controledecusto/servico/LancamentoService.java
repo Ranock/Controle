@@ -1,16 +1,17 @@
 package controledecusto.servico;
 
+import java.util.Date;
 import java.util.List;
 
-import controledecusto.modelo.dao.DividaDAO;
 import controledecusto.modelo.dao.LancamentoDAO;
-import controledecusto.modelo.dominio.Divida;
 import controledecusto.modelo.dominio.Lancamento;
 
 public class LancamentoService {
 
 	public Lancamento cadastrarLancamento(Lancamento lancamento) {
 		LancamentoDAO ldao = new LancamentoDAO();
+
+		Date d = lancamento.getDataLancamento();
 		lancamento = ldao.inserir(lancamento);
 		return lancamento;
 	}
