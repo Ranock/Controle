@@ -71,19 +71,21 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/{id}/lancamentos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Lancamento>> buscarLancamentos(@PathVariable Integer id, @RequestParam("ano") Integer ano, @RequestParam("mes") Integer mes) {
+	public ResponseEntity<List<Lancamento>> buscarLancamentos(	@PathVariable Integer id, 
+																@RequestParam("ano") Integer ano, 
+																@RequestParam(value="mes", required= false) Integer mes, 
+																@RequestParam( value="dia", required =false) Integer dia,
+																@RequestParam( value="anofim", required =false) Integer anofim,
+																@RequestParam( value="mesfim", required =false) Integer mesfim,
+																@RequestParam( value="diafim", required =false) Integer diafim) {
 		LancamentoService lanc = new LancamentoService();
 		List<Lancamento> lancamentoL = new ArrayList<>();
 		
 		if(ano!= null){
-			if(mes!=null) {
-						//TODO Implementar a Query para trazer os lancamentos do ano e mes selecionado
-				lancamentoL = lanc.buscarLancamentosPorData(id, ano, mes);
-			
-			}else {
-			//TODO Implementar Query para trazer somente os lancamentos do ano selecionado
-				lancamentoL = lanc.buscarLancamentosPorData(id, ano);
-			}
+						
+				lancamentoL = lanc.buscarLancamentosPorData(id, ano, mes, dia, anofim, mesfim, diafim);
+
+		
 		}else{
 			
 			lancamentoL = lanc.buscarLancamentosUsuario(id);
