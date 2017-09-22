@@ -1,5 +1,6 @@
 package controledecusto.controle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import controledecusto.modelo.dominio.Divida;
@@ -69,12 +71,24 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/{id}/lancamentos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Lancamento>> buscarLancamentos(@PathVariable Integer id) {
+	public ResponseEntity<List<Lancamento>> buscarLancamentos(@PathVariable Integer id, @RequestParam("ano") Integer ano, @RequestParam("mes") Integer mes) {
 		LancamentoService lanc = new LancamentoService();
-		List<Lancamento> lancamentoL;
-
-		lancamentoL = lanc.buscarLancamentosUsuario(id);
-		//
+		List<Lancamento> lancamentoL = new ArrayList<>();
+		
+		if(ano!= null){
+			if(mes!=null) {
+						//TODO Implementar a Query para trazer os lancamentos do ano e mes selecionado
+				lancamentoL = lanc.buscarLancamentosPorData(id, ano, mes);
+			
+			}else {
+			//TODO Implementar Query para trazer somente os lancamentos do ano selecionado
+				lancamentoL = lanc.buscarLancamentosPorData(id, ano);
+			}
+		}else{
+			
+			lancamentoL = lanc.buscarLancamentosUsuario(id);
+		}
+		
 		return new ResponseEntity<>(lancamentoL, HttpStatus.OK);
 	}
 

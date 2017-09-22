@@ -17,9 +17,6 @@ import controledecusto.servico.LancamentoService;
 @RestController
 @RequestMapping(value="/lancamento")
 public class LancamentoController {
-	
-
-
 
 	@RequestMapping(value="/", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Lancamento> cadastrarLancamento(@RequestBody Lancamento lancamento) {

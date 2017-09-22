@@ -3,6 +3,7 @@ package controledecusto.modelo.dominio;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Lancamento{
@@ -27,7 +29,7 @@ public class Lancamento{
 	private String nomeLancamento;
 	private float valorLancamento;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinTable(
 			name="lancamento_divida",
 			joinColumns= @JoinColumn(name="id_lancamento", referencedColumnName="idLancamento"),
@@ -36,7 +38,7 @@ public class Lancamento{
 	private Divida divida;
 	
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 
@@ -71,7 +73,7 @@ public class Lancamento{
 	public void setValorLancamento(float valorLancamento) {
 		this.valorLancamento = valorLancamento;
 	}
-
+	@JsonIgnore
 	public Divida getDivida() {
 		return divida;
 	}
@@ -80,7 +82,7 @@ public class Lancamento{
 		this.divida = divida;
 	}
 	
-
+	@JsonIgnore
 	public Usuario getUsuario() {
 		return usuario;
 	}

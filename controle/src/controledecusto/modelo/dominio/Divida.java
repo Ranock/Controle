@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Divida  {
 	
@@ -22,7 +24,7 @@ public class Divida  {
 	private boolean quitacao;
 
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 
@@ -76,7 +78,7 @@ public class Divida  {
 		this.quitacao = quitacao;
 	}
 
-
+	@JsonIgnore
 	public Usuario getUsuario() {
 		return usuario;
 	}
