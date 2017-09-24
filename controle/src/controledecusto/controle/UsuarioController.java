@@ -3,6 +3,7 @@ package controledecusto.controle;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,71 +27,69 @@ import controledecusto.servico.UsuarioService;
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
 
+	@Autowired
+	UsuarioService usuarioService;
+
+	@Autowired
+	LancamentoService lancamentoService;
+
+	@Autowired
+	DividaService dividaService;
+
 	@RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	
 	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
 
-		UsuarioService usu = new UsuarioService();
-		usuario = usu.cadastrarUsuario(usuario);
+		usuario = usuarioService.cadastrarUsuario(usuario);
 
 		return new ResponseEntity<>(usuario, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> buscarUsuario(@PathVariable Integer id) {
-		UsuarioService usu = new UsuarioService();
-		Usuario usuario = usu.buscarUsuario(id);
+		Usuario usuario = usuarioService.buscarUsuario(id);
 		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Usuario> deletarUsuario(@PathVariable Integer id) {
-		UsuarioService usu = new UsuarioService();
-		usu.apagarUsuario(id);
+		usuarioService.apagarUsuario(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 
 	}
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Usuario>> buscarUsuarios() {
-		UsuarioService usu = new UsuarioService();
+		UsuarioService usuarioService = new UsuarioService();
 		List<Usuario> usuarioL;
 
-		usuarioL = usu.buscarTodos();
+		usuarioL = usuarioService.buscarTodos();
 
 		return new ResponseEntity<>(usuarioL, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}/dividas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Divida>> buscarDividas(@PathVariable Integer id) {
-		DividaService div = new DividaService();
+
 		List<Divida> dividaL;
 
-		dividaL = div.buscarDividaUsuario(id);
+		dividaL = dividaService.buscarDividaUsuario(id);
 		//
 		return new ResponseEntity<>(dividaL, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}/lancamentos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Lancamento>> buscarLancamentos(	@PathVariable Integer id, 
-																@RequestParam("ano") Integer ano, 
-																@RequestParam(value="mes", required= false) Integer mes, 
-																@RequestParam( value="dia", required =false) Integer dia,
-																@RequestParam( value="anofim", required =false) Integer anofim,
-																@RequestParam( value="mesfim", required =false) Integer mesfim,
-																@RequestParam( value="diafim", required =false) Integer diafim) {
-		LancamentoService lanc = new LancamentoService();
-		List<Lancamento> lancamentoL = new ArrayList<>();
-		
-		if(ano!= null){
-						
-				lancamentoL = lanc.buscarLancamentosPorData(id, ano, mes, dia, anofim, mesfim, diafim);
+	public ResponseEntity<List<Lancamento>> buscarLancamentos(@PathVariable Integer id,
+				@RequestParam(value = "datainicial", required = false) String dataInicial,
+				@RequestParam(value = "datafinal", required = false) String dataFinal) {
 
-		
-		}else{
-			
-			lancamentoL = lanc.buscarLancamentosUsuario(id);
-		}
-		
+		List<Lancamento> lancamentoL = new ArrayList<>();
+
+		if ((dataInicial == null) || (dataFinal == null))
+			lancamentoL = lancamentoService.buscarLancamentosUsuario(id);
+		else
+			lancamentoL = lancamentoService.buscarLancamentosPorData(dataInicial, dataFinal, id);
+
 		return new ResponseEntity<>(lancamentoL, HttpStatus.OK);
 	}
 

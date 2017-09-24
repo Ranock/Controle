@@ -1,4 +1,6 @@
 package controledecusto.modelo.dominio;
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ public class Fixo {
 	@Column(length=100)
 	private String nomeFixo;
 	@Column(columnDefinition="numeric", precision=2)
-	private float valorFixo;
+	private BigDecimal valorFixo;
 	private Integer tipoFixo;
 	private boolean precoVaria;
 	
@@ -42,11 +44,11 @@ public class Fixo {
 		this.nomeFixo = nomeFixo;
 	}
 
-	public float getValorFixo() {
+	public BigDecimal getValorFixo() {
 		return valorFixo;
 	}
 
-	public void setValorFixo(float valorFixo) {
+	public void setValorFixo(BigDecimal valorFixo) {
 		this.valorFixo = valorFixo;
 	}
 

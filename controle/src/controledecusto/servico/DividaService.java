@@ -2,11 +2,14 @@ package controledecusto.servico;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import controledecusto.modelo.dao.DividaDAO;
 import controledecusto.modelo.dao.UsuarioDAO;
 import controledecusto.modelo.dominio.Divida;
 import controledecusto.modelo.dominio.Usuario;
 
+@Service
 public class DividaService {
 
 	public Divida cadastrarDivida(Divida divida) {

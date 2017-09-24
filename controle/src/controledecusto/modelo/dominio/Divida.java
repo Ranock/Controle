@@ -1,5 +1,7 @@
 package controledecusto.modelo.dominio;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ public class Divida  {
 	@SequenceGenerator(name="DIVIDA_SEQUENCE", allocationSize=1, sequenceName="public.divida_sequence")
 	private Integer idDivida;
 	private String data;
-	private Float valorDivida;
+	private BigDecimal valorDivida;
 	private String nomeDivida;
 	private boolean quitacao;
 
@@ -49,12 +51,12 @@ public class Divida  {
 	}
 
 
-	public Float getValorDivida() {
+	public BigDecimal getValorDivida() {
 		return valorDivida;
 	}
 
 
-	public void setValorDivida(Float valorDivida) {
+	public void setValorDivida(BigDecimal valorDivida) {
 		this.valorDivida = valorDivida;
 	}
 

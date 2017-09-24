@@ -1,13 +1,17 @@
 package controledecusto.servico;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import controledecusto.modelo.dao.LancamentoDAO;
 import controledecusto.modelo.dominio.Lancamento;
+import util.DataConverterUtil;
 
 //TODO Colocar validação para verificar se os campos ano e mes são numeros
+
+@Service
 public class LancamentoService {
 
 	public Lancamento cadastrarLancamento(Lancamento lancamento) {
@@ -46,54 +50,25 @@ public class LancamentoService {
 		return lancL;
 	}
 
-	public List<Lancamento> buscarLancamentosPorData(Integer id, Integer ano, Integer mes, Integer dia, Integer anofim,
-			Integer mesfim, Integer diafim) {
-
-		Calendar calendarInicio = Calendar.getInstance();
-		Calendar calendarFim = Calendar.getInstance();
+	public List<Lancamento> buscarLancamentosPorData(String dataIni, String dataFin, Integer idUsuario){
+		
+		List<Lancamento> lancL;
 		LancamentoDAO ldao = new LancamentoDAO();
-		List<Lancamento> lancList;
-
-		if (mes == null)
-			mes = 0;
-
-		if (dia == null)
-			dia = 1;
-
-		calendarInicio.clear();
-		calendarInicio.set(calendarInicio.YEAR, ano);
-		calendarInicio.set(calendarInicio.MONTH, mes - 1);
-		calendarInicio.set(calendarInicio.DAY_OF_MONTH, dia);
-		Date dateInicio = calendarInicio.getTime();
-
-		if ((anofim == null)) {
-
-			calendarFim = calendarInicio;
-			calendarFim.set(calendarFim.MONTH, mes);
-			calendarFim.set(calendarFim.DAY_OF_MONTH, -1);
-			Date dateFim = calendarFim.getTime();
-
-			lancList = ldao.buscarLancamentosPorData(id, dateInicio, dateFim);
-
-			return lancList;
-		} else {
-
-			if (mesfim == null)
-				calendarFim.set(calendarFim.MONTH, mes);
-			else
-				calendarFim.set(calendarFim.MONTH, mesfim -1);
-			if (diafim == null)
-				calendarFim.set(calendarFim.DAY_OF_MONTH, -1);
-			else
-				calendarFim.set(calendarFim.DAY_OF_MONTH, diafim);
-
-			Date dateFim = calendarFim.getTime();
-
-			lancList = ldao.buscarLancamentosPorData(id, dateInicio, dateFim);
-
-			return lancList;
+		
+		Date dataInicio;
+		Date dataFim;
+		dataInicio = DataConverterUtil.converterString(dataIni);
+		dataFim = DataConverterUtil.converterString(dataFin);
+		
+		
+		if((dataInicio == null) || (dataFim ==null)) {
+			return null;
+		}else {
+			lancL = ldao.buscarLancamentosPorData(idUsuario, dataInicio, dataFim);
+			return lancL;
 		}
-
+		
+	
 	}
 
 }

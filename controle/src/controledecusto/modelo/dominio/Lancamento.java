@@ -1,5 +1,6 @@
 package controledecusto.modelo.dominio;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Lancamento{
 	@JsonFormat(pattern= "dd/MM/yyy")
 	private Date  dataLancamento;
 	private String nomeLancamento;
-	private float valorLancamento;
+	private BigDecimal valorLancamento;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinTable(
@@ -66,11 +67,11 @@ public class Lancamento{
 		this.nomeLancamento = nomeLancamento;
 	}
 
-	public float getValorLancamento() {
+	public BigDecimal getValorLancamento() {
 		return valorLancamento;
 	}
 
-	public void setValorLancamento(float valorLancamento) {
+	public void setValorLancamento(BigDecimal valorLancamento) {
 		this.valorLancamento = valorLancamento;
 	}
 	@JsonIgnore

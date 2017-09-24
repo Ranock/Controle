@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 
 import javax.persistence.EntityManager;
 
+import util.JpaUtil;
+
 public class GenericDao<E> {
 
 	protected Class<E> persistentClass;

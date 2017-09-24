@@ -2,12 +2,15 @@ package controledecusto.servico;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import controledecusto.modelo.dao.FixoDAO;
 import controledecusto.modelo.dao.LancamentoDAO;
 import controledecusto.modelo.dominio.Divida;
 import controledecusto.modelo.dominio.Fixo;
 import controledecusto.modelo.dominio.Lancamento;
 
+@Service
 public class FixoService {
 
 	public Fixo cadastrarFixo(Fixo fixo) {

@@ -2,6 +2,7 @@ package controledecusto.controle;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,28 +19,27 @@ import controledecusto.servico.DividaService;
 @RequestMapping(value="/divida")
 public class DividaController {
 	
+	@Autowired
+	DividaService dividaService;
+	
 	@RequestMapping(value="/", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Divida> cadastrarDivida(@RequestBody Divida divida) {
 	
-		DividaService div = new DividaService();
-		
-		divida = div.cadastrarDivida(divida);
+		divida = dividaService.cadastrarDivida(divida);
 			
 		return new ResponseEntity<>(divida, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Divida> buscarDivida(@PathVariable Integer id) {
-		DividaService div = new DividaService();
-		Divida divida = div.buscarDivida(id);
+		Divida divida = dividaService.buscarDivida(id);
 		return new ResponseEntity<>(divida, HttpStatus.OK);
 	}
 	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Divida> deletarDivida(@PathVariable Integer id) {
-		DividaService div = new DividaService();
-		div.apagarDivida(id);
+		dividaService.apagarDivida(id);
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}
 }

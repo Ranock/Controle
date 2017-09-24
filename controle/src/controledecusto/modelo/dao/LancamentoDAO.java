@@ -32,5 +32,14 @@ public class LancamentoDAO extends GenericDao<Lancamento>{
 		List<Lancamento> lancamentoList = query.getResultList();
 		
 		return lancamentoList;
+		
+	}
+	public List<Lancamento> buscarLancamentoPorDivida(Integer idDivida){
+		
+		Query query = em.createQuery("select l from Lancamento where l.divida.id = :idDivida");
+		query.setParameter("idDivida", idDivida);
+		List<Lancamento> lancL = query.getResultList();
+		
+		return lancL;
 	}
 }

@@ -2,6 +2,7 @@ package controledecusto.controle;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,28 +19,28 @@ import controledecusto.servico.FixoService;
 @RequestMapping(value="/fixo")
 public class FixoController {
 	
+	@Autowired
+	FixoService fixoService;
+	
 	@RequestMapping(value="/", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Fixo> cadastrarFixo(@RequestBody Fixo fixo) {
 	
-		FixoService fix = new FixoService();
-		
-		fixo = fix.cadastrarFixo(fixo);
+		fixo = fixoService.cadastrarFixo(fixo);
 			
 		return new ResponseEntity<>(fixo, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Fixo> buscarFixo(@PathVariable Integer id) {
-		FixoService fix = new FixoService();
-		Fixo fixo = fix.buscarFixo(id);
+	
+		Fixo fixo = fixoService.buscarFixo(id);
 		return new ResponseEntity<>(fixo, HttpStatus.OK);
 	}
 	
 	
 	@RequestMapping(value="{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Fixo> deletarFixo(@PathVariable Integer id) {
-		FixoService fix = new FixoService();
-		fix.apagarFixo(id);
+		fixoService.apagarFixo(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
